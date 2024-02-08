@@ -3,19 +3,6 @@ import java.util.Map;
 
 public class MaxCharacterCount {
 
-    /**
-     * Given string str. The task is to find the maximum occurring character in the string str.
-     *
-     * Examples:
-     *
-     * Input: geeksforgeeks
-     * Output: e
-     * Explanation: ‘e’ occurs 4 times in the string
-     *
-     * Input: test
-     * Output: t
-     * Explanation: ‘t’ occurs 2 times in the string
-     */
     public static Map<Character, Integer> findMaxCharacterCount(String str) {
         Map<Character, Integer> max = new HashMap<>();
 
@@ -57,24 +44,25 @@ public class MaxCharacterCount {
     }
 
     static int optimized2(String str) {
-        
+
         int max = 0;
         int length = str.length();
 
+        //loop through string length
         for (int i = 0; i < length - 1; i++) {
+            //get current char and replace all occurrences
             String current_char = String.valueOf(str.charAt(i));
+            //subtract the original length with the replaced length
             int count = length - str.replace(current_char, "").length();
-            
-            if (count >= max) {
-                max = count;
-            }
+            //update max if current max is less then existent max
+            max = Math.max(count, max);
         }
 
         return max;
     }
 
     public static void main(String[] args) {
-        String str = "geekksforgeekks";
+        String str = "geekkksforgeekks";
         System.out.println(optimized(str));
         System.out.println(optimized2(str));
     }
