@@ -2,6 +2,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MaxCharacterCount {
+
+    /**
+     * Given string str. The task is to find the maximum occurring character in the string str.
+     *
+     * Examples:
+     *
+     * Input: geeksforgeeks
+     * Output: e
+     * Explanation: ‘e’ occurs 4 times in the string
+     *
+     * Input: test
+     * Output: t
+     * Explanation: ‘t’ occurs 2 times in the string
+     */
     public static Map<Character, Integer> findMaxCharacterCount(String str) {
         Map<Character, Integer> max = new HashMap<>();
 
