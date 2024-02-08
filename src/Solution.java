@@ -10,7 +10,35 @@ import java.util.stream.IntStream;
 import static java.lang.System.out;
 import static java.util.stream.Collectors.toList;
 
-
+/**
+ *2. Question 2
+ * Develop a session-based authentication system
+ * where each user session generates a new token
+ * with a specified time-to-live (TTL) expiration. The
+ * TTL expiration is calculated as the current time
+ * plus the time-to-live seconds. If a token is
+ * renewed, the TTL is extended to the time-to-live
+ * seconds after the time of the renewal.
+ * There are three types of queries in this system:
+ * • "generate <token _id> <current_time>": Creates a
+ * new token with the given token_id and
+ * current time.
+ * • "renew <token id> <current time>": Renews an
+ * unexpired token with the given token _id and
+ * current time. If there is no unexpired token with
+ * the specified token _id, the request is ignored.
+ * • "count <current time>": Returns the number of
+ * unexpired tokens at the given current_time.
+ * Note: If a token expires at a specific time and any
+ * action is performed at that same time, the token's
+ * expiration occurs before any other actions are
+ * carried out.
+ * Example
+ * Suppose time_ to live = 5, and queries =
+ * Il'"generate aaa 1"], ["renew aaa 2"I, ["count
+ * 6"]. ["generate bbb 7"], ["renew aaa 8'),
+ * ["renew bbb 10"). ["count 15"I).
+ */
 class Result {
 
     /*
