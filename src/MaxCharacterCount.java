@@ -1,15 +1,16 @@
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Given string str. The task is to find the maximum occurring character in the string str.
- *
+ * <p>
  * Examples:
- *
+ * <p>
  * Input: geeksforgeeks
  * Output: e
  * Explanation: ‘e’ occurs 4 times in the string
- *
+ * <p>
  * Input: test
  * Output: t
  * Explanation: ‘t’ occurs 2 times in the string
@@ -62,21 +63,40 @@ public class MaxCharacterCount {
         int length = str.length();
 
         //loop through string length
-        for (int i = 0; i < length - 1; i++) {
+        for (int i = 0; i < length ; i++) {
             //get current char and replace all occurrences
             String current_char = String.valueOf(str.charAt(i));
             //subtract the original length with the replaced length
             int count = length - str.replace(current_char, "").length();
-            //update max if current max is less then existent max
+            //update max if current max is less than existent max
             max = Math.max(count, max);
         }
 
         return max;
     }
 
+    static int optimized3(String str) {
+
+        Map<Character, Integer> max = new HashMap<>();
+        Map.Entry<Character, Integer> max_value = new AbstractMap.SimpleEntry<>('a', 0);
+
+        for (char i : str.toCharArray()) {
+            max.computeIfPresent(i, (k, v) -> v + 1);
+            max.putIfAbsent(i, 1);
+        }
+
+        for (Map.Entry<Character, Integer> entry : max.entrySet()) {
+            if (entry.getValue() > max_value.getValue()) {
+                max_value = entry;
+            }
+        }
+        return max_value.getValue();
+    }
+
     public static void main(String[] args) {
         String str = "geekkksforgeekks";
-        System.out.println(optimized(str));
+//        System.out.println(optimized(str));
         System.out.println(optimized2(str));
+        System.out.println(optimized3(str));
     }
 }
