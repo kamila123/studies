@@ -1,4 +1,3 @@
-import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +16,11 @@ import java.util.Map;
  */
 public class MaxCharacterCount {
 
+    // FOR operation is time O(N) where N is the size of the string 
+    // REPLACE is O(N)
+    // TOTAL is O(nˆn) N to the power of N - worst case string is huge
+    // space complexity O(1) since we always have only one item in the map and that doesn't grow proportionally to the size of the string
+    // we can do better
     public static Map<Character, Integer> findMaxCharacterCount(String str) {
         Map<Character, Integer> max = new HashMap<>();
 
@@ -33,6 +37,32 @@ public class MaxCharacterCount {
         }
 
         return max;
+    }
+
+    // first for is time O(N) where N is the size of the string 
+    // we don't have REPLACE, but we have M being unique characters 
+    // total is O(N*M) - considering worst case is M equals to N 
+    // space constant O(1) since we always have only one item in the map
+    static int optimized3(String str) {
+
+        Map<Character, Integer> max = new HashMap<>();
+        int result = 0;
+
+        for (char i : str.toCharArray()) {
+            max.computeIfPresent(i, (k, v) -> v + 1);
+            max.putIfAbsent(i, 1);
+        }
+
+        for (Map.Entry<Character, Integer> entry : max.entrySet()) {
+            result = Math.max(entry.getValue(), result);
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        String str = "geekkksforgees";
+        System.out.println(optimized2(str));
+        System.out.println(optimized3(str));
     }
 
     static int optimized(String str) {
@@ -63,7 +93,7 @@ public class MaxCharacterCount {
         int length = str.length();
 
         //loop through string length
-        for (int i = 0; i < length ; i++) {
+        for (int i = 0; i < length; i++) {
             //get current char and replace all occurrences
             String current_char = String.valueOf(str.charAt(i));
             //subtract the original length with the replaced length
@@ -73,30 +103,5 @@ public class MaxCharacterCount {
         }
 
         return max;
-    }
-
-    static int optimized3(String str) {
-
-        Map<Character, Integer> max = new HashMap<>();
-        Map.Entry<Character, Integer> max_value = new AbstractMap.SimpleEntry<>('a', 0);
-
-        for (char i : str.toCharArray()) {
-            max.computeIfPresent(i, (k, v) -> v + 1);
-            max.putIfAbsent(i, 1);
-        }
-
-        for (Map.Entry<Character, Integer> entry : max.entrySet()) {
-            if (entry.getValue() > max_value.getValue()) {
-                max_value = entry;
-            }
-        }
-        return max_value.getValue();
-    }
-
-    public static void main(String[] args) {
-        String str = "geekkksforgeekks";
-//        System.out.println(optimized(str));
-        System.out.println(optimized2(str));
-        System.out.println(optimized3(str));
     }
 }
